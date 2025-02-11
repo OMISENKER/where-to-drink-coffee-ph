@@ -1,20 +1,24 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { auth, signIn } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import MobileMenu from "./mobile-menu";
+
+export async function handleSignOut() {
+  "use server";
+  await signOut({ redirectTo: "/" });
+  console.log("logging out");
+}
 
 const Navbar = async () => {
   const session = await auth();
+  const sessionUser = session?.user;
 
   return (
     <div className="top-0 h-24 w-full flex items-center justify-between gap-10 px-10 bg-gray-800 text-white">
       <div>
-        <Link
-          href={"/"}
-          className="font-sansita text-base flex items-center gap-2"
-        >
+        <Link href={"/"} className=" text-base flex items-center gap-2">
           <Image src="/icon.png" width={50} height={50} alt="wc" />
           <span>W2DCoffeePH</span>
         </Link>
@@ -22,27 +26,10 @@ const Navbar = async () => {
       <div className="flex gap-10 items-center text-base">
         {session && session?.user ? (
           <>
-            <Link href="/recommend">
-              <span>Recommend</span>
-            </Link>
-            <Link href={`/user/${session?.user?.id}`}>
-              <Avatar>
-                <AvatarFallback>
-                  {session?.user?.name?.split(" ")[0]}
-                </AvatarFallback>
-                <AvatarImage src={session?.user?.image || ""} alt="img" />
-              </Avatar>
-            </Link>
-            {/* <form
-              action={async () => {
-                "use server";
-                await signOut(options: {redirectTo: "/"});
-              }}
-            >
-              <Button type="submit" className="text-base font-nunito">
-                Sign out
-              </Button>
-            </form> */}
+            <MobileMenu
+              user={sessionUser || " "}
+              signOutFunction={handleSignOut}
+            />
           </>
         ) : (
           <form
@@ -51,7 +38,10 @@ const Navbar = async () => {
               await signIn("facebook");
             }}
           >
-            <Button type="submit" className="text-base font-nunito">
+            <Button
+              type="submit"
+              className="text-base font-nunito hover:cursor-pointer"
+            >
               Sign in
             </Button>
           </form>

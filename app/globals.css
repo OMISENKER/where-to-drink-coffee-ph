@@ -7,6 +7,14 @@ layer(base);
   --font-sansita: "Sansita Swashed", serif;
 }
 
+.dropdown-item-styles {
+  @apply hover:bg-gray-300 dark:hover:bg-gray-700;
+}
+
+.dropdown-link-styles {
+  @apply flex items-start gap-2 h-full w-full pt-0.5;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
