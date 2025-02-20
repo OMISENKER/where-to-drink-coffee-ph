@@ -16,11 +16,18 @@ const Navbar = async () => {
   const sessionUser = session?.user;
 
   return (
-    <div className="top-0 h-24 w-full flex items-center justify-between gap-10 px-10 bg-gray-800 text-white">
+    <div className="top-0 h-24 w-full flex items-center justify-between gap-10 px-10 bg-brown-bg text-brown-text">
       <div>
-        <Link href={"/"} className=" text-base flex items-center gap-2">
-          <Image src="/icon.png" width={50} height={50} alt="wc" />
-          <span>W2DCoffeePH</span>
+        <Link
+          href={"/"}
+          className=" text-base font-semibold flex items-center gap-2"
+        >
+          <Image
+            src={"/w2dcph-logo-png.png"}
+            width={150}
+            height={50}
+            alt="W2DCoffeePH"
+          />
         </Link>
       </div>
       <div className="flex gap-10 items-center text-base">

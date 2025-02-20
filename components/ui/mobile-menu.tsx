@@ -44,7 +44,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ user, signOutFunction }) => {
           <MenuIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+      <DropdownMenuContent className="w-56 bg-brown-fg text-brown-text">
         <DropdownMenuLabel className="flex items-center gap-2">
           <Avatar>
             <AvatarFallback>
@@ -61,7 +61,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ user, signOutFunction }) => {
           </Avatar>
           <span>안녕, {user?.name?.split(" ")[0]}!</span>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator className="bg-gray-900 dark:bg-gray-400" />
+        <DropdownMenuSeparator className="bg-brown-border" />
         <DropdownMenuGroup>
           <DropdownMenuItem className="dropdown-item-styles">
             <Link href={`/user/${user.id}`} className="dropdown-link-styles">
@@ -75,13 +75,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ user, signOutFunction }) => {
               <span>Recommend a Cafe</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuSub>
+          {/* <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <UserPlus />
               <span>Invite users</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="w-42 bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+              <DropdownMenuSubContent className="w-42 bg-brown-fg text-brown-text">
                 <DropdownMenuItem>
                   <Mail />
                   <span>Email</span>
@@ -97,12 +97,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ user, signOutFunction }) => {
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
-          </DropdownMenuSub>
+          </DropdownMenuSub> */}
         </DropdownMenuGroup>
-        <DropdownMenuSeparator className="bg-gray-900 dark:bg-gray-400" />
+        <DropdownMenuSeparator className="bg-brown-border" />
         <DropdownMenuGroup>
-          <DropdownMenuItem className="dropdown-item-styles">
-            <Button onClick={signOutFunction} className="dropdown-link-styles">
+          <DropdownMenuItem>
+            <Button onClick={signOutFunction} className="button-styles w-full">
               <LogOut className="size-4 " />
               <span>Logout</span>
             </Button>
