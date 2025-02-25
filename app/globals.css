@@ -21,5 +21,5 @@ layer(base);
 }
 
 .button-styles {
-  @apply bg-brown-bg text-brown-text hover:bg-brown-border hover:text-brown-fg;
+  @apply bg-brown-bg text-brown-text hover:bg-brown-border hover:text-brown-fg p-2 rounded-lg min-w-20;
 }
