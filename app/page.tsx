@@ -1,5 +1,7 @@
 import Hero from "@/components/Hero";
-import CafeCard from "@/components/CafeCard";
+import CafeCard, { CafeCardType } from "@/components/CafeCard";
+import { client } from "@/sanity/lib/client";
+import { CAFES_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home({
   searchParams,
@@ -7,6 +9,8 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query;
+
+  const cafes = await client.fetch(CAFES_QUERY);
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center">
@@ -17,10 +21,13 @@ export default async function Home({
             {query ? `Search results for "${query}":` : "Trending cafes:"}
           </p>
           <ul className="mt-7 w-full grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-            <CafeCard />
-            <CafeCard />
-            <CafeCard />
-            <CafeCard />
+            {cafes?.length > 0 ? (
+              cafes.map((cafe: CafeCardType) => (
+                <CafeCard key={cafe?._id} cafe={cafe} />
+              ))
+            ) : (
+              <p className="text-lg">No cafes found</p>
+            )}
           </ul>
         </section>
       </main>

@@ -23,7 +23,8 @@ export const cafe = defineType({
     }),
     defineField({
       name: "cafeCategory",
-      type: "string",
+      type: "array",
+      of: [{ type: "string" }],
     }),
     defineField({
       name: "ownerId",
