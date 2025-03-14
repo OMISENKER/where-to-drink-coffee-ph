@@ -9,8 +9,8 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query;
-
-  const cafes = await client.fetch(CAFES_QUERY);
+  const params = { search: query || null };
+  const cafes = await client.fetch(CAFES_QUERY, params);
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center">

@@ -1,6 +1,7 @@
 import { defineQuery } from "next-sanity";
 
-export const CAFES_QUERY = defineQuery(`*[_type == "cafe" && defined(slug.current)] | order(_createdAt desc) {
+export const CAFES_QUERY =
+  defineQuery(`*[_type == "cafe" && defined(slug.current) && !defined($search) || cafeName match $search || cafeCategory match $search || location match $search] | order(_createdAt desc) {
     _id,
     cafeName,
     slug,
@@ -25,4 +26,4 @@ export const CAFES_QUERY = defineQuery(`*[_type == "cafe" && defined(slug.curren
     priceRange,
     facebookLink,
     instagramLink,
-    }`)
+    }`);
