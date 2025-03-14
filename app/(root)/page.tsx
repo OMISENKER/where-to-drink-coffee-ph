@@ -20,7 +20,7 @@ export default async function Home({
           <p className="text-lg font-semibold">
             {query ? `Search results for "${query}":` : "Trending cafes:"}
           </p>
-          <ul className="mt-7 w-full grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+          <ul className="mt-7 w-full grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
             {cafes?.length > 0 ? (
               cafes.map((cafe: CafeCardType) => (
                 <CafeCard key={cafe?._id} cafe={cafe} />
