@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Tag from "./Tag";
 import { Cafe, User } from "@/sanity/types";
-import { StarIcon, MapPin, Clock, Eye, ThumbsUp } from "lucide-react";
+import { StarIcon, MapPin, Clock } from "lucide-react";
 import Link from "next/link";
 
 export type CafeCardType = Omit<Cafe, "ownerId"> & { user?: User };
@@ -13,43 +13,32 @@ const CafeCard = ({ cafe }: { cafe: CafeCardType }) => {
     cafeName,
     description,
     cafeCategory,
-    views,
-    likes,
+    location,
+    googleMapsLink,
     ratings,
     storeHours,
-    location,
     frontStoreImage,
   } = cafe;
 
   return (
     <Link
       href={`/cafe/${_id}`}
-      className="min-w-14 min-h-64 max-w-64 border-3 p-2 border-brown-border rounded-xl flex flex-col items-start justify-between overflow-hidden hover:shadow-md hover:shadow-brown-border hover:bg-amber-100 cursor-pointer"
+      className="min-w-14 min-h-64 border-3 p-2 border-brown-border rounded-xl flex flex-col items-start justify-between overflow-hidden hover:shadow-md hover:shadow-brown-border hover:bg-amber-100 cursor-pointer"
     >
       <div>
         <div className="relative">
-          <div className="absolute bottom-1 right-1 bg-white bg-opacity-70 px-2 py-1 rounded-lg flex items-center gap-1 min-w-fit overflow-hidden">
-            <div className="flex items-center gap-1">
-              <StarIcon
-                size={12}
-                className={`${
-                  (ratings ?? 0) === 0
-                    ? "fill-amber-100"
-                    : (ratings ?? 0) < 4
-                      ? "fill-amber-200"
-                      : "fill-amber-300"
-                }`}
-              />
-              <p className="text-xs">{ratings}</p>
-            </div>
-            <div className="flex items-center gap-1">
-              <Eye size={12} />
-              <p className="text-xs">{views}</p>
-            </div>
-            <div className="flex items-center gap-1">
-              <ThumbsUp size={10} />
-              <p className="text-xs">{likes}</p>
-            </div>
+          <div className="absolute top-1 right-1 bg-white bg-opacity-70 p-2 rounded-lg flex items-center gap-1">
+            <StarIcon
+              size={12}
+              className={`fill-${
+                (ratings ?? 0) === 0
+                  ? "amber-100"
+                  : (ratings ?? 0) < 4
+                    ? "amber-200"
+                    : "amber-300"
+              }`}
+            />
+            <p className="text-xs">{ratings}</p>
           </div>
           <Image
             src={frontStoreImage || "./test-1.png"}

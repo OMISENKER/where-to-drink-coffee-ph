@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Navbar from "@/components/ui/navbar";
 
 export const metadata: Metadata = {
   title: "W2DCoffeePH",
@@ -14,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-nunito antialiased`}>{children}</body>
+      <body className={`font-nunito antialiased`}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
