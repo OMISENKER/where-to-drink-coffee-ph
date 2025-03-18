@@ -1,5 +1,7 @@
 import React from "react";
 import { client } from "@/sanity/lib/client";
+import { writeClient } from "@/sanity/lib/write-client";
+import { after } from "next/server";
 import { CAFE_BY_ID_QUERY } from "@/sanity/lib/queries";
 import { notFound } from "next/navigation";
 import {
@@ -42,6 +44,13 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     facebookLink,
     instagramLink,
   } = cafe;
+
+  after(async () => {
+    await writeClient
+      .patch(_id)
+      .set({ views: views + 1 })
+      .commit();
+  });
 
   return (
     <div className="px-2 py-2 md:py-6 lg:py-8 md:px-[10%] lg:px-[20%] flex flex-col gap-4 justify-center">
@@ -87,7 +96,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
               <p className="text-xs">{likes}</p>
             </div>
           </div>
-          <div className="mr-4 flex items-center text-xs gap-1 self-end">
+          <div className="mr-2 flex items-center text-xs gap-1 self-end">
             {facebookLink || instagramLink ? <p>Socials:</p> : null}
             {facebookLink && (
               <a href={facebookLink} target="_blank" rel="noreferrer">
