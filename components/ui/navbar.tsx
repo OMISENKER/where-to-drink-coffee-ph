@@ -8,7 +8,6 @@ import MobileMenu from "./mobile-menu";
 export async function handleSignOut() {
   "use server";
   await signOut({ redirectTo: "/" });
-  console.log("logging out");
 }
 
 const Navbar = async () => {

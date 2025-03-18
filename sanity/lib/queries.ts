@@ -49,3 +49,12 @@ export const CAFE_BY_ID_QUERY =
     facebookLink,
     instagramLink,
   }`);
+
+export const USER_BY_FACEBOOK_ID_QUERY =
+  defineQuery(`*[_type == "user" && id == $id][0]{
+  _id,
+  id,
+  name,
+  email,
+  userCategory,
+}`);

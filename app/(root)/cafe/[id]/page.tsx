@@ -26,10 +26,8 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const {
     _id,
     cafeName,
-    slug,
     description,
     cafeCategory,
-    ownerId,
     views,
     likes,
     ratings,
