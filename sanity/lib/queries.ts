@@ -56,5 +56,6 @@ export const USER_BY_FACEBOOK_ID_QUERY =
   id,
   name,
   email,
+  image,
   userCategory,
 }`);
