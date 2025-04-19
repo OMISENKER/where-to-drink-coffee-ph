@@ -1,5 +1,6 @@
 "use client";
 import React, { use, useActionState, useState } from "react";
+import { z } from "zod";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Input } from "./ui/input";
@@ -7,15 +8,15 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Coffee, CirclePlus, X } from "lucide-react";
 import { formSchema } from "@/lib/validation";
-import { z } from "zod";
 import { toast } from "sonner";
+import { createCafe } from "@/lib/actions";
 
 const CafeForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const handleAddTag = () => {
     // Validation with existing errors state
@@ -46,38 +47,35 @@ const CafeForm = () => {
     setTags(tags.filter((t) => t !== tag));
   };
 
-  const handleFormSubmit = async (prevState: any, formdata: FormData) => {
+  const handleFormSubmit = async (prevState: any, formData: FormData) => {
     try {
       const formValues = {
-        cafeName: formdata.get("cafeName") as string,
-        description: formdata.get("description") as string,
-        cafeCategory: formdata.get("cafeCategory") as string,
-        storeHours: formdata.get("storeHours") as string,
-        location: formdata.get("location") as string,
-        googleMapsLink: formdata.get("googleMapsLink") as string,
-        logoImage: formdata.get("logoImage") as string,
-        frontStoreImage: formdata.get("frontStoreImage") as string,
-        menuImages: formdata.get("menuImages") as string,
-        priceRange: formdata.get("priceRange") as string,
-        facebookLink: formdata.get("facebookLink") as string,
-        instagramLink: formdata.get("instagramLink") as string,
+        cafeName: formData.get("cafeName") as string,
+        description: formData.get("description") as string,
+        cafeCategory: formData.get("cafeCategory") as string,
+        storeHours: formData.get("storeHours") as string,
+        location: formData.get("location") as string,
+        googleMapsLink: formData.get("googleMapsLink") as string,
+        logoImage: formData.get("logoImage") as string,
+        frontStoreImage: formData.get("frontStoreImage") as string,
+        menuImages: formData.get("menuImages") as string,
+        priceRange: formData.get("priceRange") as string,
+        facebookLink: formData.get("facebookLink") as string,
+        instagramLink: formData.get("instagramLink") as string,
       };
 
       await formSchema.parseAsync(formValues);
-      console.log("Form values are valid:", formValues);
 
-      // const result = await createIdea(prevState, formData);
+      const result = await createCafe(prevState, formData);
 
-      // console.log(result);
+      if (result.status === "SUCCESS") {
+        toast("Cafe added successfully", {
+          description: "Your cafe has been added.",
+        });
+        router.push(`/cafes/${result._id}`);
+      }
 
-      // if (result.status === "SUCCESS") {
-      //   toast("Cafe added successfully", {
-      //     description: "Your cafe has been added.",
-      //   });
-      //   router.push(`/cafes/${result.id}`);
-      // }
-
-      // return result;
+      return result;
     } catch (error) {
       if (error instanceof z.ZodError) {
         const fieldErrors = error.flatten().fieldErrors;
