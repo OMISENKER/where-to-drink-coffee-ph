@@ -23,3 +23,23 @@ layer(base);
 .button-styles {
   @apply bg-brown-bg text-brown-text hover:bg-brown-border hover:text-brown-fg p-2 rounded-lg min-w-20;
 }
+
+.cafe-form {
+  @apply max-w-2xl mx-auto bg-white my-10 space-y-8 px-6;
+}
+
+.cafe-form_label {
+  @apply font-bold text-[18px] text-black uppercase;
+}
+
+.cafe-form_input {
+  @apply border-[3px] border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-gray-400;
+}
+
+.cafe-form_textarea {
+  @apply border-[3px] border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:text-gray-400;
+}
+
+.cafe-form_error {
+  @apply text-red-500 mt-2 ml-5;
+}
