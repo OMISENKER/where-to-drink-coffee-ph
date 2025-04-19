@@ -5,15 +5,46 @@ import Link from "next/link";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { Coffee } from "lucide-react";
+import { Coffee, CirclePlus, X } from "lucide-react";
 import { formSchema } from "@/lib/validation";
 import { z } from "zod";
 import { toast } from "sonner";
 
 const CafeForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState("");
 
   // const router = useRouter();
+
+  const handleAddTag = () => {
+    // Validation with existing errors state
+    if (!tagInput.trim()) {
+      setErrors((prev) => ({ ...prev, tagInput: "Tag cannot be empty" }));
+      return;
+    }
+    if (tags.includes(tagInput.trim())) {
+      setErrors((prev) => ({ ...prev, tagInput: "Tag already exists" }));
+      return;
+    }
+
+    // Clear error if validation passes
+    if (errors.tagInput) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors.tagInput;
+        return newErrors;
+      });
+    }
+
+    // Add tag and reset input
+    setTags([...tags, tagInput.trim()]);
+    setTagInput("");
+  };
+
+  const handleRemoveTag = (tag: string) => {
+    setTags(tags.filter((t) => t !== tag));
+  };
 
   const handleFormSubmit = async (prevState: any, formdata: FormData) => {
     try {
@@ -117,14 +148,48 @@ const CafeForm = () => {
         <label htmlFor="cafeCategory" className="cafe-form_label">
           Tags *
         </label>
-        <p>separate with commas ","</p>
-        <Input
-          id="cafeCategory"
-          name="cafeCategory"
-          className="cafe-form_input"
-          required
-          placeholder="24/7, wifi, books, etc."
-        />
+        <p className="text-xs">
+          Sample tags: WFH/Student/PWD Friendly, WiFi, Parking available, Nature
+          view, {" (xyz)-themed cafe"}
+        </p>
+        <div className="group flex items-center justify-start gap-2 mb-2 border-[3px] border-black px-1 py-2 text-[18px] text-black font-semibold rounded-full mt-3  focus-within:outline-[3px] focus-within:outline-black">
+          <Input
+            id="tagInput"
+            value={tagInput}
+            onChange={(e) => setTagInput(e.target.value)}
+            onKeyDown={(e) =>
+              e.key === "Enter" && (e.preventDefault(), handleAddTag())
+            }
+            className="cafe-form_tag"
+            placeholder="Add a tag then hit Enter."
+          />
+          <Button
+            type="button"
+            onClick={handleAddTag}
+            className="round-button-styles mr-2 "
+          >
+            <CirclePlus className="!size-5 leading-0" />
+          </Button>
+        </div>
+        {errors.tagInput && (
+          <p className="cafe-form_error">{errors.tagInput}</p>
+        )}
+
+        <div className="flex flex-wrap gap-2 mt-2 mb-4">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="bg-brown-bg text-brown-text px-2 py-1 rounded-full flex items-center justify-center gap-1 cursor-pointer  hover:text-red-800 hover:outline-2 hover:outline-red-300 transition-all duration-20 ease-in-out"
+              onClick={() => handleRemoveTag(tag)}
+            >
+              {tag}
+              <X className="size-4 " />
+            </span>
+          ))}
+        </div>
+
+        <input type="hidden" name="cafeCategory" value={tags.join(", ")} />
+
         {errors.cafeCategory && (
           <p className="cafe-form_error">{errors.cafeCategory}</p>
         )}
@@ -139,7 +204,7 @@ const CafeForm = () => {
           name="storeHours"
           className="cafe-form_input"
           required
-          placeholder="Store Hours"
+          placeholder="M-F 8:00 AM - 10:00 PM"
         />
         {errors.storeHours && (
           <p className="cafe-form_error">{errors.storeHours}</p>

@@ -9,7 +9,13 @@ const page = async () => {
   return (
     <>
       <section>
-        <h1>Add your Cafe</h1>
+        <div className="min-h-52 w-full bg-[url('/hero-bg.jpg')] bg-no-repeat bg-cover bg-start flex items-center justify-center">
+          <div className="bg-brown-border p-3 rounded-2xl flex flex-col gap-8 items-center justify-center">
+            <h1 className="text-2xl font-bold text-white uppercase text-center py-2 px-4">
+              Add your Cafe
+            </h1>
+          </div>
+        </div>
       </section>
       <CafeForm />
     </>

@@ -24,6 +24,10 @@ layer(base);
   @apply bg-brown-bg text-brown-text hover:bg-brown-border hover:text-brown-fg p-2 rounded-lg min-w-20;
 }
 
+.round-button-styles {
+  @apply bg-brown-bg text-brown-text hover:bg-brown-border hover:text-brown-fg p-0 rounded-full min-w-10 w-10 h-10;
+}
+
 .cafe-form {
   @apply max-w-2xl mx-auto bg-white my-10 space-y-8 px-6;
 }
@@ -34,6 +38,10 @@ layer(base);
 
 .cafe-form_input {
   @apply border-[3px] border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-gray-400;
+}
+
+.cafe-form_tag {
+  @apply outline-none ring-0 border-none shadow-none focus-visible:border-none focus-visible:shadow-none focus-visible:ring-0 focus:outline-none active:border-none active:shadow-none active:ring-0 active:outline-none w-full;
 }
 
 .cafe-form_textarea {

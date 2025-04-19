@@ -18,11 +18,34 @@ const imageUrlValidator = () =>
     );
 
 export const formSchema = z.object({
-  cafeName: z.string().min(3).max(100),
-  description: z.string().min(10).max(500),
-  cafeCategory: z.string().min(3).max(100),
-  storeHours: z.string().min(3).max(100),
-  location: z.string().min(3).max(100),
+  cafeName: z
+    .string()
+    .min(3, { message: "Cafe name should be at least 3 characters" })
+    .max(100, { message: "Cafe name cannot exceed 100 characters" }),
+
+  description: z
+    .string()
+    .min(10, {
+      message: "Please provide a longer description.",
+    })
+    .max(500, { message: "Description is too long (maximum 500 characters)" }),
+
+  cafeCategory: z
+    .string()
+    .min(3, { message: "Please add at least one tag" })
+    .max(200, { message: "Tags are too long" }),
+
+  storeHours: z
+    .string()
+    .min(3, { message: "At least 3 characters" })
+    .max(100, { message: "Store hours text is too long" }),
+
+  location: z
+    .string()
+    .min(10, {
+      message: "Please enter a valid location (At least 10 characters)",
+    })
+    .max(100, { message: "Location text is too long" }),
   googleMapsLink: z
     .string()
     .url()
