@@ -1,7 +1,7 @@
 import React from "react";
 import { client } from "@/sanity/lib/client";
 import { writeClient } from "@/sanity/lib/write-client";
-import { after } from "next/server";
+import { unstable_after as after } from "next/server";
 import { CAFE_BY_ID_QUERY } from "@/sanity/lib/queries";
 import { notFound } from "next/navigation";
 import {
